@@ -1,0 +1,23 @@
+name: Site quality check (safe)
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Check broken links (soft)
+        uses: lycheeverse/lychee-action@v1
+        with:
+          args: >
+            --no-progress
+            --accept 200,206,429
+            --exclude-mail
+            --exclude-loopback
+            "**/*.html"
